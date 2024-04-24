@@ -1,214 +1,129 @@
-# # from selenium import webdriver
-# # from selenium.common.exceptions import WebDriverException
-# # import time
-
-# # driver = webdriver.Chrome()
-
-# # while True:
-# #     try:
-# #         driver.get("https://www.linkedin.com/jobs/search/?f_TPR=r86400&geoId=102713980&keywords=Backend%20Developer&location=India&origin=JOB_SEARCH_PAGE_SEARCH_BUTTON&refresh=true&original_referer=&position=1&pageNum=0")
-# #         print('Page loaded successfully')
-# #         time.sleep(100)
-# #         break
-# #     except WebDriverException:
-# #         print("Page load failed. Retrying...")
-# #         time.sleep(5)
-
-# #         infinite-scroller__show-more-button
-
-
-# from selenium import webdriver
-# from selenium.common.exceptions import WebDriverException, NoSuchElementException
-# from selenium.webdriver.common.by import By
-# import time
-
-# driver = webdriver.Chrome()
-
-# while True:
-#     try:
-#         driver.get("https://www.linkedin.com/jobs/search/?f_TPR=r86400&geoId=102713980&keywords=Backend%20Developer&location=India&origin=JOB_SEARCH_PAGE_SEARCH_BUTTON&refresh=true&original_referer=&position=1&pageNum=0")
-#         print('Page loaded successfully')
-#         while True:
-#             try:
-#                 for i in range(10):
-#                     driver.execute_script("window.scrollBy(0, 100);")
-#                     time.sleep(0.1)
-#                 if (driver.find_element(By.CSS_SELECTOR, ".infinite-scroller__show-more-button")):
-#                     print("Found 'Show more' button. Clicking...")
-#                     show_more_button = driver.find_element(By.CSS_SELECTOR, ".infinite-scroller__show-more-button")
-#                     show_more_button.click()
-#                 else:
-#                     time.sleep(5)
-#             except NoSuchElementException:
-#                 print("No more 'Show more' button found. End of page reached.")
-#     except WebDriverException:
-#         print("Page load failed. Retrying...")
-#         time.sleep(5)
-
-
-# from selenium import webdriver
-# from selenium.common.exceptions import WebDriverException, NoSuchElementException
-# from selenium.webdriver.common.by import By
-# import time
-
-# original_url = "https://www.linkedin.com/jobs/search/?f_TPR=r86400&geoId=102713980&keywords=Backend%20Developer&location=India&origin=JOB_SEARCH_PAGE_SEARCH_BUTTON&refresh=true&original_referer=&position=1&pageNum=0"
-
-# driver = webdriver.Chrome()
-
-# while True:
-#     try:
-#         driver.get(original_url)
-#         print('Page loaded successfully')
-#         while True:
-#             try:
-#                 for i in range(10):
-#                     driver.execute_script("window.scrollBy(0, 100);")
-#                     time.sleep(0.1)
-#                 if (driver.find_element(By.CSS_SELECTOR, ".infinite-scroller__show-more-button")):
-#                     print("Found 'Show more' button. Clicking...")
-#                     show_more_button = driver.find_element(By.CSS_SELECTOR, ".infinite-scroller__show-more-button")
-#                     show_more_button.click()
-#                 else:
-#                     time.sleep(5)
-#             except NoSuchElementException:
-#                 print("No more 'Show more' button found. End of page reached.")
-#             if driver.current_url != original_url:
-#                 print("Redirect detected. Navigating back to original URL...")
-#                 driver.get(original_url)
-
-#     except WebDriverException:
-#         print("Page load failed. Retrying...")
-#         time.sleep(5)
-
-
-# from selenium import webdriver
-# from selenium.common.exceptions import WebDriverException, NoSuchElementException
-# from selenium.webdriver.common.by import By
-# import time
-# import requests
-
-# original_url = "https://www.linkedin.com/jobs/search/?f_TPR=r86400&geoId=102713980&keywords=Backend%20Developer&location=India&origin=JOB_SEARCH_PAGE_SEARCH_BUTTON&refresh=true&original_referer=&position=1&pageNum=0"
-
-# driver = webdriver.Chrome()
-
-# while True:
-#     try:
-#         driver.get(original_url)
-#         print('Page loaded successfully')
-#         while True:
-#             try:
-#                 for i in range(10):
-#                     driver.execute_script("window.scrollBy(0, 100);")
-#                     time.sleep(0.1)
-#                 if (driver.find_element(By.CSS_SELECTOR, ".infinite-scroller__show-more-button")):
-#                     print("Found 'Show more' button. Clicking...")
-#                     show_more_button = driver.find_element(By.CSS_SELECTOR, ".infinite-scroller__show-more-button")
-#                     show_more_button.click()
-#                 else:
-#                     time.sleep(5)
-#             except NoSuchElementException:
-#                 print("No more 'Show more' button found. End of page reached.")
-#             if driver.current_url != original_url:
-#                 print("Redirect detected. Navigating back to original URL...")
-#                 driver.get(original_url)
-
-#     except WebDriverException:
-#         print("Page load failed. Retrying...")
-#         time.sleep(5)
-
-#     except requests.HTTPError as e:
-#         if e.response.status_code == 429:
-#             print("Too many requests. Retrying...")
-#             time.sleep(60)
-#         else:
-#             raise e
-
-
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException, NoSuchElementException
 from selenium.webdriver.common.by import By
+from selenium.webdriver import Remote, ChromeOptions
+from selenium.webdriver.chromium.remote_connection import ChromiumRemoteConnection
+
 import time
+import json
 import requests
 
+SBR_WEBDRIVER = ''
+
 companies = [
-    {'name': 'Allegis Group', 'link': 'https://www.linkedin.com/jobs/search/?f_C=2153&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
-    {'name': 'Randstad', 'link': 'https://www.linkedin.com/jobs/search/?f_C=2327&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
-    {'name': 'Adecco', 'link': 'https://www.linkedin.com/jobs/search/?f_C=1104359&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
-    {'name': 'Manpower', 'link': 'https://www.linkedin.com/jobs/search/?f_C=2312083&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
-    {'name': 'Robert Half', 'link': 'https://www.linkedin.com/jobs/search/?f_C=1681&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true'},
+    {'name': 'Allegis Group','link': 'https://www.linkedin.com/jobs/search/?f_C=2153&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'ResourceMFG','link': 'https://www.linkedin.com/jobs/search/?f_C=841184&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=tru&position=1&pageNum=0e'},
+    {'name': 'PDS Tech','link': 'https://www.linkedin.com/jobs/search/?f_C=7161&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Synergy Staffing','link': 'https://www.linkedin.com/jobs/search/?f_C=795177&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'TRC Staffing Services','link': 'https://www.linkedin.com/jobs/search/?f_C=7886&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'PrideStaff','link': 'https://www.linkedin.com/jobs/search/?f_C=17987&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Experis','link': 'https://www.linkedin.com/jobs/search/?f_C=2203697&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Robert Half','link': 'https://www.linkedin.com/jobs/search/?f_C=1681&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Aeropres','link': 'https://www.linkedin.com/jobs/search/?f_C=4242524&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'BelFlex Staffing Network','link': 'https://www.linkedin.com/jobs/search/?f_C=3571908&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Adecco','link': 'https://www.linkedin.com/jobs/search/?f_C=1104359&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Solomon Page','link': 'https://www.linkedin.com/jobs/search/?f_C=14352&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Genuent','link': 'https://www.linkedin.com/jobs/search/?f_C=61577701&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Aston Carter','link': 'https://www.linkedin.com/jobs/search/?f_C=13153&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Pro Staff','link': 'https://www.linkedin.com/jobs/search/?f_C=6636&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'TEKsystems Global Services','link': 'https://www.linkedin.com/jobs/search/?f_C=80818388&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Ajilon','link': 'https://www.linkedin.com/jobs/search/?f_C=24875&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'SNI Companies','link': 'https://www.linkedin.com/jobs/search/?f_C=971273&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Synergis','link': 'https://www.linkedin.com/jobs/search/?f_C=260295&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Addison Group','link': 'https://www.linkedin.com/jobs/search/?f_C=18043&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Brooksource','link': 'https://www.linkedin.com/jobs/search/?f_C=18476&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'The Select Group','link': 'https://www.linkedin.com/jobs/search/?f_C=28526&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Accountemps','link': 'https://www.linkedin.com/jobs/search/?f_C=40762747&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'RemX','link': 'https://www.linkedin.com/jobs/search/?f_C=2471868&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Diversant','link': 'https://www.linkedin.com/jobs/search/?f_C=918331&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Ettain Group','link': 'https://www.linkedin.com/jobs/search/?f_C=12773&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Beacon Hill Staffing Group','link': 'https://www.linkedin.com/jobs/search/?f_C=22456&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Manpower','link': 'https://www.linkedin.com/jobs/search/?f_C=2312083&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Randstad','link': 'https://www.linkedin.com/jobs/search/?f_C=2327&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
 ]
 
-window_height = 0
-count = 0
-reachedTillEnd = False
+# driver = webdriver.Chrome()
 
-driver = webdriver.Chrome()
+# sbr_connection = ChromiumRemoteConnection(SBR_WEBDRIVER, 'goog', 'chrome')  
+#     with Remote(sbr_connection, options=ChromeOptions()) as driver:  
+#         print('Connected! Navigating...')  
 
 
-async def printLinks(driver, links):
-    print(links)
+def sendData(company_name, links):
+    urls = []
+    for link in links:
+        urls.append(link.get_attribute('href'))
+
+    url = "https://c2cjobs.org/api/v1/general/linkedInJobs"
+
+    payload = json.dumps({
+        "company_name": company_name,
+        "urls": urls
+    })
+    print(payload)
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    try:
+        response = requests.request("POST", url, headers=headers, data=payload)
+        if response.status_code == 200:
+            print('Data sent successfully to c2cjobs.org API')
+        else:
+            print('Failed to send data to c2cjobs.org API. Status code:',
+                  response.status_code)
+    except requests.RequestException as e:
+        print('An error occurred while sending data to c2cjobs.org API:', e)
+
+def getData(company_name, original_url):
+    count = 0
+    window_height = 0
+    reachedTillEnd = False
+    sbr_connection = ChromiumRemoteConnection(SBR_WEBDRIVER, 'goog', 'chrome')  
+    with Remote(sbr_connection, options=ChromeOptions()) as driver:  
+        print('Connected! Navigating...')  
+    while True:
+        try:
+            driver.get(original_url)
+            print('Page loaded successfully')
+            while True:
+                if driver.current_url != original_url:
+                    print('Redirect detected. Navigating back to original URL...')
+                    try:
+                        driver.get(original_url)
+                    except requests.HTTPError as e:
+                        driver.get(original_url)
+                try:
+                    for i in range(10):
+                        driver.execute_script('window.scrollBy(0, 100);')
+                        time.sleep(0.2)
+                    print(count)
+                    if window_height != driver.execute_script('return window.innerHeight'):
+                        window_height = driver.execute_script(
+                            'return window.innerHeight')
+                    else:
+                        count += 1
+                        if count == 25:
+                            links = driver.find_elements(
+                                By.CSS_SELECTOR, '.base-card__full-link')
+                            sendData(company_name, links)
+                            reachedTillEnd = True
+                            break
+                except NoSuchElementException:
+                    print('No Such Element Found')
+        except requests.HTTPError as e:
+            if e.response.status_code == 429:
+                driver.get(original_url)
+            else:
+                driver.get(original_url)
+        except WebDriverException:
+            print('Page load failed. Retrying...')
+        if reachedTillEnd:
+            return
+
 
 while True:
-    try:
-        driver.get(original_url)
-        while True:
-            if driver.current_url != original_url:
-                print("Redirect detected. Navigating back to original URL...")
-                try:
-                    driver.get(original_url)
-                except requests.HTTPError as e:
-                    print("First 429 error. Retrying...")
-            try:
-                for i in range(10):
-                    driver.execute_script("window.scrollBy(0, 100);")
-                    time.sleep(0.2)
-                if (driver.find_element(By.CSS_SELECTOR, ".inline-notification__text")):
-                    element = driver.find_element(By.CSS_SELECTOR, ".inline-notification__text")
-                    if element.text == "You've viewed all jobs for this search":
-                        print(
-                            "No more 'Show more' button found. End of page reached.")
-                        break
-                if window_height != driver.execute_script("return window.innerHeight"):
-                    window_height = driver.execute_script("return window.innerHeight")
-                else:
-                    count += 1
-                    if count == 25:
-                        links = driver.find_elements(
-                            By.CSS_SELECTOR, ".base-card__full-link")
-                        for link in links:
-                            print(link.get_attribute("href"))
-                        if (driver.find_element(By.CSS_SELECTOR, ".infinite-scroller__show-more-button")):
-                            print("Found 'Show more' button. Clicking...")
-                            element = driver.find_element(
-                                By.CSS_SELECTOR, ".infinite-scroller__show-more-button")
-                            if element:
-                                element.click()
-                            count = 0
-                        else:
-                            break
-
-                # Check if the "Show more" button is visible in the viewport
-                # show_more_button = driver.find_element(By.CSS_SELECTOR, ".infinite-scroller__show-more-button")
-                # driver.execute_script("arguments[0].scrollIntoView();", show_more_button)
-                # time.sleep(1)  # Wait for scroll animation to complete
-                # button_location = show_more_button.location_once_scrolled_into_view
-                # if button_location['y'] >= 0 and button_location['y'] <= driver.execute_script("return window.innerHeight"):
-                #     print("Found 'Show more' button. Clicking...")
-                #     show_more_button.click()
-                # else:
-                #     print("'Show more' button is not visible in the viewport. Skipping...")
-
-            except NoSuchElementException:
-                print("No Such Element Found")
-
-    except requests.HTTPError as e:
-        if e.response.status_code == 429:
-            print("First 429 error. Retrying...")
-        else:
-            raise e
-
-    except WebDriverException:
-        print("Page load failed. Retrying...")
-
-    if reachedTillEnd:
-        print("Reached Till End. Breaking...")
+    for company in companies:
+        original_url = company['link']
+        company_name = company['name']
+        getData(company_name, original_url)
+        print('Done for ' + company['name'])
