@@ -8,11 +8,13 @@ import time
 import json
 import requests
 
-SBR_WEBDRIVER = ''
+# SBR_WEBDRIVER = 'https://brd-customer-hl_d791b343-zone-c2c_linkedin_scraper:q6z3dfujuzo6@brd.superproxy.io:9515'
 
 companies = [
+    {'name': 'Apex Systems','link': 'https://www.linkedin.com/jobs/search/?f_C=4787&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Insight Global','link': 'https://www.linkedin.com/jobs/search/?f_C=11056&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
     {'name': 'Allegis Group','link': 'https://www.linkedin.com/jobs/search/?f_C=2153&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
-    {'name': 'ResourceMFG','link': 'https://www.linkedin.com/jobs/search/?f_C=841184&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=tru&position=1&pageNum=0e'},
+    {'name': 'ResourceMFG','link': 'https://www.linkedin.com/jobs/search/?f_C=841184&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
     {'name': 'PDS Tech','link': 'https://www.linkedin.com/jobs/search/?f_C=7161&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
     {'name': 'Synergy Staffing','link': 'https://www.linkedin.com/jobs/search/?f_C=795177&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
     {'name': 'TRC Staffing Services','link': 'https://www.linkedin.com/jobs/search/?f_C=7886&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
@@ -40,9 +42,25 @@ companies = [
     {'name': 'Beacon Hill Staffing Group','link': 'https://www.linkedin.com/jobs/search/?f_C=22456&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
     {'name': 'Manpower','link': 'https://www.linkedin.com/jobs/search/?f_C=2312083&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
     {'name': 'Randstad','link': 'https://www.linkedin.com/jobs/search/?f_C=2327&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'TEKsystems Global Services','link': 'https://www.linkedin.com/jobs/search/?f_C=80818388&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Hays','link': 'https://www.linkedin.com/jobs/search/?f_C=3486&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Kforce','link': 'https://www.linkedin.com/jobs/search/?f_C=3076&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Volt','link': 'https://www.linkedin.com/jobs/search/?f_C=19071211&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Spherion','link': 'https://www.linkedin.com/jobs/search/?f_C=2266&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'DISYS','link': 'https://www.linkedin.com/jobs/search/?f_C=15228&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Express Employment Professionals','link': 'https://www.linkedin.com/jobs/search/?f_C=1907001&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Collabera','link': 'https://www.linkedin.com/jobs/search/?f_C=24440&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Vaco','link': 'https://www.linkedin.com/jobs/search/?f_C=11229&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Modis','link': 'https://www.linkedin.com/jobs/search/?f_C=224006&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Signature Consultants','link': 'https://www.linkedin.com/jobs/search/?f_C=9687&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Aerotek','link': 'https://www.linkedin.com/jobs/search/?f_C=2889&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Yoh','link': 'https://www.linkedin.com/jobs/search/?f_C=6044&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'Lucas Group','link': 'https://www.linkedin.com/jobs/search/?f_C=6488&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'CyberCoders','link': 'https://www.linkedin.com/jobs/search/?f_C=21836&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
+    {'name': 'On Assignment','link': 'https://www.linkedin.com/jobs/search/?f_C=8720&f_TPR=r86400&origin=JOB_SEARCH_PAGE_JOB_FILTER&refresh=true&position=1&pageNum=0'},
 ]
 
-# driver = webdriver.Chrome()
+driver = webdriver.Chrome()
 
 # sbr_connection = ChromiumRemoteConnection(SBR_WEBDRIVER, 'goog', 'chrome')  
 #     with Remote(sbr_connection, options=ChromeOptions()) as driver:  
@@ -60,7 +78,8 @@ def sendData(company_name, links):
         "company_name": company_name,
         "urls": urls
     })
-    print(payload)
+    print(company_name,len(urls))
+
     headers = {
         'Content-Type': 'application/json'
     }
@@ -78,9 +97,9 @@ def getData(company_name, original_url):
     count = 0
     window_height = 0
     reachedTillEnd = False
-    sbr_connection = ChromiumRemoteConnection(SBR_WEBDRIVER, 'goog', 'chrome')  
-    with Remote(sbr_connection, options=ChromeOptions()) as driver:  
-        print('Connected! Navigating...')  
+    # sbr_connection = ChromiumRemoteConnection(SBR_WEBDRIVER, 'goog', 'chrome')  
+    # with Remote(sbr_connection, options=ChromeOptions()) as driver:  
+    #     print('Connected! Navigating...')  
     while True:
         try:
             driver.get(original_url)
@@ -93,7 +112,7 @@ def getData(company_name, original_url):
                     except requests.HTTPError as e:
                         driver.get(original_url)
                 try:
-                    for i in range(10):
+                    for i in range(20):
                         driver.execute_script('window.scrollBy(0, 100);')
                         time.sleep(0.2)
                     print(count)
